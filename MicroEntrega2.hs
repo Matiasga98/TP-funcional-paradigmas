@@ -112,6 +112,13 @@ ifnz listaDeInstrucciones unMicrocontrolador = ejecutarInstrucciones listaDeInst
 
 -- PUNTO 4
 
+aplicar :: b->(b->c)->c
+aplicar valor funcion = funcion valor
+depurar :: Microprocesador->[Instruccion] -> [Instruccion]
+depurar unMicrocontrolador  = filter (not.estanDatosEnCero.(aplicar unMicrocontrolador)) 
+estanDatosEnCero :: Microprocesador -> Bool
+estanDatosEnCero (Microprocesador memoriaDeDatos acumuladorA acumuladorB programCounter etiqueta memoriaDeProgramas) = acumuladorA == 0 && acumuladorB == 0 && all (==0) memoriaDeDatos
+
 
 -- PUNTO 5
 memoriaEstaOrdenada :: Microprocesador -> Bool
